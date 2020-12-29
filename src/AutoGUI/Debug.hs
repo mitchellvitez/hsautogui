@@ -5,8 +5,8 @@ module AutoGUI.Debug
   )
 where
 
-import AutoGUI
 import AutoGUI.Call
+import AutoGUI.Run
 
 import Control.Concurrent
 import Control.Monad.IO.Class

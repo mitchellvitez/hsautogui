@@ -4,8 +4,8 @@ module AutoGUI.Screen
   )
 where
 
-import AutoGUI
 import AutoGUI.Call
+import AutoGUI.Run
 
 import Control.Monad.IO.Class
 import Data.Text (Text)

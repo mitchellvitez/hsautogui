@@ -6,8 +6,8 @@ module AutoGUI.MessageBoxes
   )
 where
 
-import AutoGUI
 import AutoGUI.Call
+import AutoGUI.Run
 
 import Control.Monad
 import Control.Monad.IO.Class

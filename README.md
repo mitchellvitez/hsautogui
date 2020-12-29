@@ -9,7 +9,7 @@ These are straightforward Haskell bindings for PyAutoGUI, a library for automati
 This is just about the simplest possible example:
 
 ```haskell
-import AutoGUI.All
+import AutoGUI
 main = runAutoGUI $ write "Hello, world!"
 ```
 
@@ -26,7 +26,7 @@ This is especially useful for some data that looks like this, where there are wa
 When using this library, the following Haskell and Python examples do the same thing:
 
 ```haskell
-import AutoGUI.All
+import AutoGUI
 import Control.Monad.IO.Class (liftIO)
 
 main :: IO ()

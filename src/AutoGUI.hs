@@ -1,28 +1,61 @@
 module AutoGUI
-  ( runAutoGUI
+  ( AutoGUI(..)
   , AutoGUIT(..)
-  , AutoGUI(..)
+  , Key
+  , alert
+  , click
+  , confirm
+  , doubleClick
+  , drag
+  , dragDuration
+  , dragRel
+  , dragRelDuration
+  , dragTo
+  , dragToDuration
+  , failsafe
+  , hotkey
+  , isValidKey
+  , key
+  , keyDown
+  , keyToText
+  , keyUp
+  , keys
+  , leftClick
+  , locateCenterOnScreen
+  , locateOnScreen
+  , middleClick
+  , mkKey
+  , mouseDown
+  , mouseUp
+  , moveAndClick
+  , moveRel
+  , moveRelDuration
+  , moveTo
+  , moveToDuration
+  , onScreen
+  , password
+  , pause
+  , position
+  , press
+  , prompt
+  , rightClick
+  , runAutoGUI
+  , scroll
+  , size
+  , sleep
+  , tripleClick
+  , typewrite
+  , typewriteKeys
+  , write
+  , writeWithInterval
   )
 where
 
-import Control.Monad
-import Control.Monad.IO.Class
-import Control.Monad.Reader
-
-import qualified CPython                  as Py
-import qualified CPython.Constants        as Py
-import qualified CPython.Protocols.Object as Py
-import qualified CPython.Types            as Py
-import qualified CPython.Types.Module     as Py
-
-newtype AutoGUIT m a =
-  AutoGUIT { unAutoGUI :: ReaderT Py.Module m a }
-  deriving (Functor, Applicative, Monad, MonadIO, MonadReader Py.Module)
-
-type AutoGUI = AutoGUIT IO
-
-runAutoGUI :: AutoGUI a -> IO a
-runAutoGUI autogui = do
-  Py.initialize
-  autoguiModule <- Py.importModule "pyautogui"
-  runReaderT (unAutoGUI autogui) autoguiModule
+import AutoGUI.Debug
+import AutoGUI.Info
+import AutoGUI.Keyboard
+import AutoGUI.Keys
+import AutoGUI.MessageBoxes
+import AutoGUI.Mouse
+import AutoGUI.Run
+import AutoGUI.Screen

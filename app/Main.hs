@@ -1,6 +1,6 @@
 module Main where
 
-import AutoGUI.All
+import AutoGUI
 import Control.Monad.IO.Class (liftIO)
 
 main :: IO ()

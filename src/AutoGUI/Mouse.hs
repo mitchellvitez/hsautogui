@@ -22,8 +22,8 @@ module AutoGUI.Mouse
   )
 where
 
-import AutoGUI
 import AutoGUI.Call
+import AutoGUI.Run
 
 -- | Move the mouse to an (x, y) position
 moveTo :: Integer -> Integer -> AutoGUI ()

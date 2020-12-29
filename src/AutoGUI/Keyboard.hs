@@ -10,9 +10,9 @@ module AutoGUI.Keyboard
   )
 where
 
-import AutoGUI
 import AutoGUI.Call
 import AutoGUI.Keys
+import AutoGUI.Run
 
 import Data.Text (Text)
 import qualified Data.Text as T

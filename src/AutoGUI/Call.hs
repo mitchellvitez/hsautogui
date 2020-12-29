@@ -1,6 +1,6 @@
 module AutoGUI.Call where
 
-import AutoGUI
+import AutoGUI.Run
 import AutoGUI.Keys
 
 import Control.Monad.Reader
