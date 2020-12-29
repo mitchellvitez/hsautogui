@@ -1,0 +1,55 @@
+name:                hsautogui
+version:             0.1.0.0
+github:              "mitchellvitez/hsautogui"
+license:             BSD3
+author:              "Mitchell Vitez"
+maintainer:          "mitchell@vitez.me"
+copyright:           "2020 Mitchell Vitez"
+
+extra-source-files:
+- README.md
+
+synopsis:            Haskell bindings for PyAutoGUI
+
+description:         Please see the README on GitHub at <https://github.com/mitchellvitez/hsautogui#readme>
+
+dependencies:
+- base >= 4.7 && < 5
+
+library:
+  source-dirs: src
+  dependencies:
+  - base
+  - containers
+  - cpython
+  - mtl
+  - template-haskell
+  - text
+  default-extensions:
+  - DeriveLift
+  - GeneralizedNewtypeDeriving
+  - LambdaCase
+  - MultiParamTypeClasses
+  - OverloadedStrings
+  - RecordWildCards
+  - QuasiQuotes
+  - ScopedTypeVariables
+  - TemplateHaskell
+  extra-libraries: python3
+
+# sample app showing off a few features
+executables:
+  hsautogui-sample-exe:
+    main: Main.hs
+    source-dirs: app
+    ghc-options:
+    - -threaded
+    - -rtsopts
+    - -with-rtsopts=-N
+    - -Wall -W
+    default-extensions:
+    - OverloadedStrings
+    - QuasiQuotes
+    dependencies:
+    - hsautogui
+    extra-libraries: python3
