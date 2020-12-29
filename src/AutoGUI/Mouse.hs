@@ -96,8 +96,8 @@ dragRelDuration xOffset yOffset duration =
   call "dragRel" [IntArg xOffset, IntArg yOffset, DoubleArg duration]
 
 -- | Scroll up (positive) or down (negative)
-scroll :: Double -> AutoGUI ()
-scroll amount = call "scroll" [DoubleArg amount]
+scroll :: Integer -> AutoGUI ()
+scroll amount = call "scroll" [IntArg amount]
 
 -- TODO: support mouseDown/mouseUp for other mouse buttons besides LMB
 

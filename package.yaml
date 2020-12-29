@@ -1,5 +1,5 @@
 name:                hsautogui
-version:             0.1.0.0
+version:             0.1.0
 github:              "mitchellvitez/hsautogui"
 license:             BSD3
 author:              "Mitchell Vitez"
@@ -8,8 +8,10 @@ copyright:           "2020 Mitchell Vitez"
 
 extra-source-files:
 - README.md
+- changelog.md
 
-synopsis:            Haskell bindings for PyAutoGUI
+synopsis:            Haskell bindings for PyAutoGUI, a library for automating user interaction
+category:            Automation
 
 description:         Please see the README on GitHub at <https://github.com/mitchellvitez/hsautogui#readme>
 

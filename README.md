@@ -1,6 +1,6 @@
 # hsautogui
 
-Haskell AutoGUI - Haskell bindings for [PyAutoGUI](https://pyautogui.readthedocs.io)
+Haskell bindings for [PyAutoGUI](https://pyautogui.readthedocs.io)
 
 ## About
 
@@ -14,12 +14,6 @@ main = runAutoGUI $ write "Hello, world!"
 ```
 
 This doesn't just print `Hello, world!` to the screen, but instead simulates a user typing it in.
-
-## Constructing a `Key`
-
-Because not all valid `Text`s are valid `Key`s, we need a way to check that `Key`s are valid when creating them. This leads to `mkKey :: Text -> Maybe Key`. However, using the `key` quasiquoter, we can sidestep having to use `Maybe` by catching invalid keys at compile time. For example, `[key|backspace|]` is a valid `Key` which we can construct and check at compile time.
-
-This is especially useful for some data that looks like this, where there are way too many values (and values with strange characters) for a sum type to be especially handy, but we want to check validity in some way. We generally know which keys we want to use at compile time.
 
 ## Language Comparison
 
@@ -52,6 +46,12 @@ for i in range(1, 101):
     pyautogui.press('enter')
     time.sleep(0.5)
 ```
+
+## Constructing a `Key`
+
+Because not all valid `Text`s are valid `Key`s, we need a way to check that `Key`s are valid when creating them. This leads to `mkKey :: Text -> Maybe Key`. However, using the `key` quasiquoter, we can sidestep having to use `Maybe` by catching invalid keys at compile time. For example, `[key|backspace|]` is a valid `Key` which we can construct and check at compile time.
+
+This is especially useful for some data that looks like this, where there are way too many values (and values with strange characters) for a sum type to be especially handy, but we want to check validity in some way. We generally know which keys we want to use at compile time.
 
 ## Overview
 
@@ -110,7 +110,7 @@ for i in range(1, 101):
 - `dragToDuration :: Integer -> Integer -> Double -> AutoGUI ()` - Clicks and drags the mouse to the position (x, y), over a number of seconds
 - `dragRel :: Integer -> Integer -> AutoGUI ()` - Clicks and drags the mouse through a motion of (x, y)
 - `dragRelDuration :: Integer -> Integer -> Double -> AutoGUI ()` - Clicks and drags the mouse through a motion of (x, y)
-- `scroll :: Double -> AutoGUI ()` - Scroll up (positive) or down (negative)
+- `scroll :: Integer -> AutoGUI ()` - Scroll up (positive) or down (negative)
 - `mouseDown :: AutoGUI ()` - Press the mouse button down
 - `mouseUp :: AutoGUI ()` - Release the mouse button
 
