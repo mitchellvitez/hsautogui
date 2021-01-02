@@ -17,10 +17,11 @@ This doesn't just print `Hello, world!` to the screen, but instead simulates a u
 
 ## Language Comparison
 
-When using this library, the following Haskell and Python examples do the same thing:
+The following Haskell and Python examples do the same thing:
 
 ```haskell
 import AutoGUI
+import Control.Monad (forM_)
 import Control.Monad.IO.Class (liftIO)
 
 main :: IO ()
