@@ -23,7 +23,7 @@ library:
   dependencies:
   - base
   - containers
-  - cpython
+  - cpython >= 3.5
   - mtl
   - template-haskell
   - text
@@ -37,7 +37,7 @@ library:
   - QuasiQuotes
   - ScopedTypeVariables
   - TemplateHaskell
-  extra-libraries: python3
+  extra-libraries: python
 
 # sample app showing off a few features
 executables:
@@ -54,4 +54,4 @@ executables:
     - QuasiQuotes
     dependencies:
     - hsautogui
-    extra-libraries: python3
+    extra-libraries: python
