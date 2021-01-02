@@ -1,6 +1,5 @@
 .stack-work/
 stack.yaml.lock
-hsautogui.cabal
 *~
 dist-newstyle/
 dist/

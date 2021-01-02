@@ -37,7 +37,6 @@ library:
   - QuasiQuotes
   - ScopedTypeVariables
   - TemplateHaskell
-  extra-libraries: python
 
 # sample app showing off a few features
 executables:
@@ -54,4 +53,3 @@ executables:
     - QuasiQuotes
     dependencies:
     - hsautogui
-    extra-libraries: python
