@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: be6c2e00d21cf85e615350fe59038b730f15c8685ecd9814f1e3f5d5349f8b99
+-- hash: 1f1d54be4c46662f6e037d57d33b2cb38573da14ee8750dd4af7ca1e16f723a5
 
 name:           hsautogui
 version:        0.2.0
@@ -64,4 +64,19 @@ executable hsautogui-sample-exe
   build-depends:
       base >=4.7 && <5
     , hsautogui
+  default-language: Haskell2010
+
+test-suite hsautogui-test
+  type: exitcode-stdio-1.0
+  main-is: Main.hs
+  other-modules:
+      Paths_hsautogui
+  hs-source-dirs:
+      test
+  default-extensions: OverloadedStrings QuasiQuotes
+  ghc-options: -threaded -rtsopts -with-rtsopts=-N -Wall -W
+  build-depends:
+      base >=4.7 && <5
+    , hsautogui
+    , hspec
   default-language: Haskell2010
