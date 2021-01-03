@@ -10,8 +10,4 @@ main :: IO ()
 main = hspec $ do
   describe "basic" $ do
     it "runs AutoGUI" $ do
-      runAutoGUI $
-        forM_ [1..3] $ \i -> do
-          write "beep"
-          press [key|enter|]
-          liftIO $ sleep 0.5
+      runAutoGUI $ pause 1.0
