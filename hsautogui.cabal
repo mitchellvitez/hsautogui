@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 1f1d54be4c46662f6e037d57d33b2cb38573da14ee8750dd4af7ca1e16f723a5
+-- hash: 82ff311eed561a5ec2d2d7f3e607a07eea41a27a70268d5fbc2a63f171cf7fc4
 
 name:           hsautogui
 version:        0.2.0
@@ -47,7 +47,7 @@ library
   build-depends:
       base
     , containers
-    , cpython >=3.5
+    , cpython >=3.5.1
     , mtl
     , template-haskell
     , text

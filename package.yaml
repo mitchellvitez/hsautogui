@@ -23,7 +23,7 @@ library:
   dependencies:
   - base
   - containers
-  - cpython >= 3.5
+  - cpython >= 3.5.1
   - mtl
   - template-haskell
   - text
