@@ -9,5 +9,5 @@ import Control.Monad.IO.Class (liftIO)
 main :: IO ()
 main = hspec $ do
   describe "basic" $ do
-    it "runs AutoGUI" $ do
-      runAutoGUI $ pause 1.0
+    it "runs" $ do
+      pause 1.0
