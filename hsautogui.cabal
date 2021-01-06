@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 82ff311eed561a5ec2d2d7f3e607a07eea41a27a70268d5fbc2a63f171cf7fc4
+-- hash: bd26be7e71afe826e651190072eaf8dbc1df6dcb56c88c676f922af150e859a9
 
 name:           hsautogui
 version:        0.2.0
@@ -32,12 +32,12 @@ library
       AutoGUI
       AutoGUI.Call
       AutoGUI.Debug
+      AutoGUI.Discard
       AutoGUI.Info
       AutoGUI.Keyboard
       AutoGUI.Keys
       AutoGUI.MessageBoxes
       AutoGUI.Mouse
-      AutoGUI.Run
       AutoGUI.Screen
   other-modules:
       Paths_hsautogui

@@ -2,17 +2,15 @@ module Main where
 
 import AutoGUI
 import Control.Monad (forM_)
-import Control.Monad.IO.Class (liftIO)
 
 main :: IO ()
 main = do
   putStrLn "3 seconds until beeping begins"
   sleep 3
-  runAutoGUI $
-    forM_ [1..100] $ \i -> do
-      write "beep"
-      press [key|enter|]
-      liftIO $ sleep 0.5
+  forM_ [1..100] $ \i -> do
+    write "beep"
+    press [key|enter|]
+    sleep 0.5
 
 {- # The above is equivalent to this Python code:
 

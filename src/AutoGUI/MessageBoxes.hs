@@ -7,51 +7,36 @@ module AutoGUI.MessageBoxes
 where
 
 import AutoGUI.Call
-import AutoGUI.Run
-
+import CPython.Simple
 import Control.Monad
 import Control.Monad.IO.Class
 import Data.Text (Text)
 import qualified Data.Text as T
 
-import qualified CPython                  as Py
-import qualified CPython.Constants        as Py
-import qualified CPython.Protocols.Object as Py
-import qualified CPython.Types            as Py
-import qualified CPython.Types.Module     as Py
-
 -- | Show a box onscreen until dismissed
-alert :: Text -> AutoGUI ()
-alert msg = call "alert" [TextArg msg]
+alert :: Text -> IO ()
+alert msg = pyautogui "alert" [arg msg] []
 
 -- | Show a box onscreen until a user hits OK or Cancel
 --   Return True on OK, False on Cancel, and False if user closes the box
-confirm :: Text -> AutoGUI Bool
+confirm :: Text -> IO Bool
 confirm msg = do
-  pyObjOkOrCancel <- call' "confirm" [TextArg msg]
-  liftIO $ do
-    pyOkOrCancelCasted <- Py.cast pyObjOkOrCancel
-    case pyOkOrCancelCasted of
-      Nothing -> pure False
-      Just pyOkOrCancel -> do
-        okOrCancel <- Py.fromUnicode pyOkOrCancel
-        pure $ if okOrCancel == "OK" then True else False
+  okOrCancel :: Text <- pyautogui "confirm" [arg msg] []
+  pure $ okOrCancel == "OK"
 
 -- | Show a box onscreen, allowing user to enter some screened text
 --   Return empty string if user closes the box
-password :: Text -> AutoGUI Text
+password :: Text -> IO Text
 password msg = textInput "password" msg
 
 -- | Show a box onscreen, allowing user to enter some text
 --   Return empty string if user closes the box
-prompt :: Text -> AutoGUI Text
+prompt :: Text -> IO Text
 prompt msg = textInput "prompt" msg
 
-textInput :: Text -> Text -> AutoGUI Text
+textInput :: Text -> Text -> IO Text
 textInput func msg = do
-  pyObjPrompt <- call' func [TextArg msg]
-  liftIO $ do
-    pyPrompt <- Py.cast pyObjPrompt
-    case pyPrompt of
-      Just promptText -> Py.fromUnicode promptText
-      Nothing -> pure ""
+  pyPrompt :: Maybe Text <- pyautogui func [arg msg] []
+  pure $ case pyPrompt of
+    Just promptText -> promptText
+    Nothing -> ""

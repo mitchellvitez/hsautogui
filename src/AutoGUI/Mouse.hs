@@ -1,5 +1,8 @@
+{-# LANGUAGE TypeApplications #-}
+
 module AutoGUI.Mouse
-  ( moveTo
+  ( MouseButton(..)
+  , moveTo
   , moveToDuration
   , moveRel
   , moveRelDuration
@@ -23,88 +26,109 @@ module AutoGUI.Mouse
 where
 
 import AutoGUI.Call
-import AutoGUI.Run
+import CPython.Simple
+import CPython.Simple.Instances
+import Data.Text
+
+data MouseButton
+  = LeftMouseButton
+  | RightMouseButton
+  | MiddleMouseButton
+
+-- TODO: try to make this as easy/automatic as possible
+instance ToPy MouseButton where
+  toPy LeftMouseButton   = toPy @Text "left"
+  toPy RightMouseButton  = toPy @Text "right"
+  toPy MiddleMouseButton = toPy @Text "middle"
 
 -- | Move the mouse to an (x, y) position
-moveTo :: Integer -> Integer -> AutoGUI ()
-moveTo x y = call "moveTo" [IntArg x, IntArg y]
+moveTo :: Integer -> Integer -> IO ()
+moveTo x y = pyautogui "moveTo" [arg x, arg y] []
 
 -- | Move the mouse to an (x, y) position, over a number of seconds
-moveToDuration :: Integer -> Integer -> Double -> AutoGUI ()
-moveToDuration x y duration = call "moveTo" [IntArg x, IntArg y, DoubleArg duration]
+moveToDuration :: Integer -> Integer -> Double -> IO ()
+moveToDuration x y duration =
+  pyautogui "moveTo" [arg x, arg y] [("duration", arg duration)]
 
 -- | Move the mouse relative to where it is now
-moveRel :: Integer -> Integer -> AutoGUI ()
-moveRel xOffset yOffset = call "moveRel" [IntArg xOffset, IntArg yOffset]
+moveRel :: Integer -> Integer -> IO ()
+moveRel xOffset yOffset =
+  pyautogui "moveRel" [arg xOffset, arg yOffset] []
 
 -- | Move the mouse relative to where it is now, over a number of seconds
-moveRelDuration :: Integer -> Integer -> Double -> AutoGUI ()
+moveRelDuration :: Integer -> Integer -> Double -> IO ()
 moveRelDuration xOffset yOffset duration =
-  call "moveRel" [IntArg xOffset, IntArg yOffset, DoubleArg duration]
+  pyautogui "moveRel" [arg xOffset, arg yOffset, arg duration] []
 
--- | Click the mouse
-click :: AutoGUI ()
-click = call "click" []
-
--- | Left click the mouse
-leftClick :: AutoGUI ()
-leftClick = click
+-- | Click a specified mouse button
+click :: MouseButton -> IO ()
+click button = pyautogui "click" [] [("button", arg button)]
 
 -- | Double click the mouse
-doubleClick :: AutoGUI ()
-doubleClick = call "doubleClick" []
+doubleClick :: IO ()
+doubleClick = pyautogui "doubleClick" [] []
 
 -- | Triple click the mouse
-tripleClick :: AutoGUI ()
-tripleClick = call "tripleClick" []
+tripleClick :: IO ()
+tripleClick = pyautogui "tripleClick" [] []
+
+-- | Left click the mouse
+leftClick :: IO ()
+leftClick = click LeftMouseButton
 
 -- | Right click the mouse
-rightClick :: AutoGUI ()
-rightClick = call "rightClick" []
+rightClick :: IO ()
+rightClick = click RightMouseButton
 
 -- | Middle click the mouse
-middleClick :: AutoGUI ()
-middleClick = call "middleClick" []
+middleClick :: IO ()
+middleClick = click MiddleMouseButton
 
 -- | Move the mouse to some (x, y) position and click there
-moveAndClick :: Integer -> Integer -> AutoGUI ()
-moveAndClick x y = moveTo x y >> click
+moveAndClick :: Integer -> Integer -> IO ()
+moveAndClick x y = moveTo x y >> click LeftMouseButton
 
 -- | Clicks and drags the mouse through a motion of (x, y)
-drag :: Integer -> Integer -> AutoGUI ()
-drag x y = call "drag" [IntArg x, IntArg y]
+drag :: Integer -> Integer -> IO ()
+drag x y = pyautogui "drag" [arg x, arg y] []
 
 -- | Clicks and drags the mouse through a motion of (x, y), over a number of seconds
-dragDuration :: Integer -> Integer -> Double -> AutoGUI ()
-dragDuration x y duration = call "drag" [IntArg x, IntArg y, DoubleArg duration]
+dragDuration :: Integer -> Integer -> Double -> IO ()
+dragDuration x y duration = pyautogui "drag" [arg x, arg y, arg duration] []
 
 -- | Clicks and drags the mouse to the position (x, y)
-dragTo :: Integer -> Integer -> AutoGUI ()
-dragTo x y = call "dragTo" [IntArg x, IntArg y]
+dragTo :: Integer -> Integer -> IO ()
+dragTo x y = pyautogui "dragTo" [arg x, arg y] []
 
 -- | Clicks and drags the mouse to the position (x, y), over a number of seconds
-dragToDuration :: Integer -> Integer -> Double -> AutoGUI ()
-dragToDuration x y duration = call "dragTo" [IntArg x, IntArg y, DoubleArg duration]
+dragToDuration :: Integer -> Integer -> Double -> IO ()
+dragToDuration x y duration = pyautogui "dragTo" [arg x, arg y, arg duration] []
 
 -- | Clicks and drags the mouse through a motion of (x, y)
-dragRel :: Integer -> Integer -> AutoGUI ()
-dragRel xOffset yOffset = call "dragRel" [IntArg xOffset, IntArg yOffset]
+dragRel :: Integer -> Integer -> IO ()
+dragRel xOffset yOffset = pyautogui "dragRel" [arg xOffset, arg yOffset] []
 
 -- | Clicks and drags the mouse through a motion of (x, y)
-dragRelDuration :: Integer -> Integer -> Double -> AutoGUI ()
+dragRelDuration :: Integer -> Integer -> Double -> IO ()
 dragRelDuration xOffset yOffset duration =
-  call "dragRel" [IntArg xOffset, IntArg yOffset, DoubleArg duration]
+  pyautogui "dragRel" [arg xOffset, arg yOffset, arg duration] []
 
 -- | Scroll up (positive) or down (negative)
-scroll :: Integer -> AutoGUI ()
-scroll amount = call "scroll" [IntArg amount]
+scroll :: Integer -> IO ()
+scroll amount = pyautogui "scroll" [arg amount] []
 
--- TODO: support mouseDown/mouseUp for other mouse buttons besides LMB
+-- | Press the left mouse button down
+mouseDown :: IO ()
+mouseDown = pyautogui "mouseDown" [] []
 
--- | Press the mouse button down
-mouseDown :: AutoGUI ()
-mouseDown = call "mouseDown" []
+-- | Release the left mouse button
+mouseUp :: IO ()
+mouseUp = pyautogui "mouseUp" [] []
 
--- | Release the mouse button
-mouseUp :: AutoGUI ()
-mouseUp = call "mouseUp" []
+-- | Press a specified mouse button
+mouseButtonDown :: MouseButton -> IO ()
+mouseButtonDown button = pyautogui "mouseDown" [] [("button", arg button)]
+
+-- | Press a specified mouse button
+mouseButtonUp :: MouseButton -> IO ()
+mouseButtonUp button = pyautogui "mouseUp" [] [("button", arg button)]
