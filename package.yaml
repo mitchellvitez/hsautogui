@@ -69,3 +69,4 @@ tests:
     dependencies:
     - hsautogui
     - hspec
+    - cpython >= 3.5.1
