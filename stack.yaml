@@ -1,8 +1,10 @@
-resolver:
-  url: https://raw.githubusercontent.com/commercialhaskell/stackage-snapshots/master/lts/16/27.yaml
+resolver: lts-16.27
 
 packages:
 - .
 
 extra-deps:
 - cpython-3.5.1@sha256:fb15b6778a14671d9bd2c7c76d24ca8ca08e206381e6b7770efae75ab1e0ff6c,2643
+
+nix:
+  enable: true
