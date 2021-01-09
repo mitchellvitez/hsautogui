@@ -1,7 +1,5 @@
 module AutoGUI
-  ( AutoGUI(..)
-  , AutoGUIT(..)
-  , Key
+  ( Key
   , alert
   , click
   , confirm
@@ -39,7 +37,6 @@ module AutoGUI
   , press
   , prompt
   , rightClick
-  , runAutoGUI
   , scroll
   , size
   , sleep
@@ -57,5 +54,4 @@ import AutoGUI.Keyboard
 import AutoGUI.Keys
 import AutoGUI.MessageBoxes
 import AutoGUI.Mouse
-import AutoGUI.Run
 import AutoGUI.Screen

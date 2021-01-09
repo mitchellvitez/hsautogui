@@ -1,64 +1,41 @@
 module AutoGUI.Screen
   ( locateOnScreen
   , locateCenterOnScreen
+  , Color(..)
   )
 where
 
 import AutoGUI.Call
-import AutoGUI.Run
-
+import AutoGUI.Discard
+import CPython.Simple
 import Control.Monad.IO.Class
 import Data.Text (Text)
 import qualified Data.Text as T
 
-import qualified CPython                  as Py
-import qualified CPython.Constants        as Py
-import qualified CPython.Protocols.Object as Py
-import qualified CPython.Types            as Py
-import qualified CPython.Types.Module     as Py
+type Color = (Integer, Integer, Integer)
 
--- TODO: Returns a Pillow/PIL Image object. Not nicely supported yet.
+-- TODO: Returns a Pillow/PIL Image object. Not supported yet.
 -- screenshot :: AutoGUI Py.SomeObject
 -- screenshot = call' "screenshot" []
 
 -- | Return (left, top, width, height) of first place the image is found
-locateOnScreen :: FilePath -> AutoGUI (Maybe (Integer, Integer, Integer, Integer))
-locateOnScreen path = do
-  pyObjTuple <- call' "locateOnScreen" [TextArg $ T.pack path]
-  isNone <- liftIO $ Py.isNone pyObjTuple
-  if isNone
-    then pure Nothing
-    else liftIO $ do
-      Just tuple <- Py.cast pyObjTuple
-      [pyObjLeft, pyObjTop, pyObjWidth, pyObjHeight] <- Py.fromTuple tuple
-      Just pyLeft <- Py.cast pyObjLeft
-      Just pyTop <- Py.cast pyObjTop
-      Just pyWidth <- Py.cast pyObjWidth
-      Just pyHeight <- Py.cast pyObjHeight
-      left <- Py.fromInteger pyLeft
-      top <- Py.fromInteger pyTop
-      width <- Py.fromInteger pyWidth
-      height <- Py.fromInteger pyHeight
-      pure $ Just (left, top, width, height)
+locateOnScreen :: FilePath -> IO (Maybe (Integer, Integer, Integer, Integer))
+locateOnScreen path =
+  pyautogui "locateOnScreen" [arg $ T.pack path] []
 
--- TODO: Returns a Python generator. Convert that to a Haskell list.
--- locateAllOnScreen :: FilePath -> AutoGUI [(Integer, Integer, Integer, Integer)]
--- locateAllOnScreen path = call' "locateAllOnScreen" [TextArg $ T.pack path]
+-- TODO: Returns a Python generator. Convert that to a Haskell list. Not supported yet.
+-- locateAllOnScreen :: FilePath -> IO [(Integer, Integer, Integer, Integer)]
+-- locateAllOnScreen path = pyautogui "locateAllOnScreen" [arg $ T.pack path] []
 
 -- | Return (x, y) of center of an image, if the image is found
-locateCenterOnScreen :: FilePath -> AutoGUI (Maybe (Integer, Integer))
-locateCenterOnScreen path = do
-  pyObjTuple <- call' "locateCenterOnScreen" [TextArg $ T.pack path]
-  isNone <- liftIO $ Py.isNone pyObjTuple
-  if isNone
-    then pure Nothing
-    else liftIO $ do
-      Just tuple <- Py.cast pyObjTuple
-      [pyObjWidth, pyObjHeight] <- Py.fromTuple tuple
-      Just pyWidth <- Py.cast pyObjWidth
-      Just pyHeight <- Py.cast pyObjHeight
-      width <- Py.fromInteger pyWidth
-      height <- Py.fromInteger pyHeight
-      pure $ Just (width, height)
+locateCenterOnScreen :: FilePath -> IO (Maybe (Integer, Integer))
+locateCenterOnScreen path =
+  pyautogui "locateCenterOnScreen" [arg $ T.pack path] []
 
--- TODO pixelMatchesColor
+pixelMatchesColor :: Integer -> Integer -> Color -> IO Bool
+pixelMatchesColor x y color =
+  pyautogui "pixelMatchesColor" [arg x, arg y, arg color] []
+
+pixelMatchesColorWithTolerance :: Integer -> Integer -> Color -> Double -> IO Bool
+pixelMatchesColorWithTolerance x y color tolerance =
+  pyautogui "pixelMatchesColor" [arg x, arg y, arg color] [("tolerance", arg tolerance)]

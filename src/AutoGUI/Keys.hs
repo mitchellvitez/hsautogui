@@ -8,6 +8,7 @@ module AutoGUI.Keys
   )
 where
 
+import CPython.Simple.Instances
 import Data.Set (Set)
 import qualified Data.Set as Set
 import Data.Text (Text)
@@ -18,6 +19,10 @@ import Language.Haskell.TH.Syntax
 
 newtype Key = Key String
   deriving (Eq, Show, Ord, Lift)
+
+-- TODO make the string overlapping instance nicer
+instance ToPy Key where
+  toPy (Key str) = toPy $ T.pack str
 
 mkKey :: Text -> Maybe Key
 mkKey key = if isValidKey key then Just (Key (T.unpack key)) else Nothing

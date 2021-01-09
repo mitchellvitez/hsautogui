@@ -7,40 +7,20 @@ module AutoGUI.Info
 where
 
 import AutoGUI.Call
-import AutoGUI.Run
-
+import AutoGUI.Discard
 import Control.Monad.IO.Class
+import CPython.Simple
 import Data.Text (Text)
 import qualified Data.Text as T
 
-import qualified CPython                  as Py
-import qualified CPython.Constants        as Py
-import qualified CPython.Protocols.Object as Py
-import qualified CPython.Types            as Py
-import qualified CPython.Types.Module     as Py
-
 -- | (screenWidth, screenHeight) of the primary monitor in pixels
-size :: AutoGUI (Integer, Integer)
-size = getXY "size"
+size :: IO (Integer, Integer)
+size = pyautogui "size" [] []
 
 -- | (x, y) position of the mouse
-position :: AutoGUI (Integer, Integer)
-position = getXY "position"
+position :: IO (Integer, Integer)
+position = pyautogui "position" [] []
 
 -- | Test whether (x, y) is within the screen size
-onScreen :: Integer -> Integer -> AutoGUI Bool
-onScreen x y = do
-  pyObjBool <- call' "onScreen" [IntArg x, IntArg y]
-  liftIO $ Py.toBool pyObjBool
-
-getXY :: Text -> AutoGUI (Integer, Integer)
-getXY func = do
-  pyObjTuple <- call' func []
-  liftIO $ do
-    Just tuple <- Py.cast pyObjTuple
-    [pyObjWidth, pyObjHeight] <- Py.fromTuple tuple
-    Just pyWidth <- Py.cast pyObjWidth
-    Just pyHeight <- Py.cast pyObjHeight
-    width <- Py.fromInteger pyWidth
-    height <- Py.fromInteger pyHeight
-    pure (width, height)
+onScreen :: Integer -> Integer -> IO Bool
+onScreen x y = pyautogui "onScreen" [arg x, arg y] []
