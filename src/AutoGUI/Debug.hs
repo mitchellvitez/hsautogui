@@ -8,8 +8,6 @@ where
 import AutoGUI.Discard
 
 import Control.Concurrent
-import Control.Monad.IO.Class
-import Control.Monad.Reader
 import CPython.Simple
 import Data.Text (Text)
 import qualified Data.Text as T
