@@ -24,7 +24,6 @@ The following Haskell and Python examples do the same thing:
 ```haskell
 import AutoGUI
 import Control.Monad (forM_)
-import Control.Monad.IO.Class (liftIO)
 
 main :: IO ()
 main = do
