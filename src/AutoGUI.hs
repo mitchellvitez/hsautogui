@@ -12,6 +12,7 @@ module AutoGUI
   , dragToDuration
   , failsafe
   , hotkey
+  , initialize
   , isValidKey
   , key
   , keyDown
@@ -55,3 +56,4 @@ import AutoGUI.Keys
 import AutoGUI.MessageBoxes
 import AutoGUI.Mouse
 import AutoGUI.Screen
+import CPython.Simple (initialize)
