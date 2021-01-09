@@ -10,7 +10,9 @@ This is just about the simplest possible example:
 
 ```haskell
 import AutoGUI
-main = write "Hello, world!"
+main = do
+  initialize
+  write "Hello, world!"
 ```
 
 This doesn't just print `Hello, world!` to the screen, but instead simulates a user typing it in.
@@ -25,6 +27,7 @@ import Control.Monad (forM_)
 
 main :: IO ()
 main = do
+  initialize
   putStrLn "3 seconds until beeping begins"
   sleep 3
   forM_ [1..100] $ \i -> do
