@@ -1,5 +1,5 @@
 name:                hsautogui
-version:             0.2.0
+version:             0.3.0
 github:              "mitchellvitez/hsautogui"
 license:             BSD3
 author:              "Mitchell Vitez"
@@ -37,22 +37,6 @@ library:
   - QuasiQuotes
   - ScopedTypeVariables
   - TemplateHaskell
-
-# sample app showing off a few features
-executables:
-  hsautogui-sample-exe:
-    main: Main.hs
-    source-dirs: app
-    ghc-options:
-    - -threaded
-    - -rtsopts
-    - -with-rtsopts=-N
-    - -Wall -W
-    default-extensions:
-    - OverloadedStrings
-    - QuasiQuotes
-    dependencies:
-    - hsautogui
 
 tests:
   hsautogui-test:
